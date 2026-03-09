@@ -1,0 +1,24 @@
+src/components/input/MentionExtension.ts
+  d9b96befc13a7763 8-18
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.8",
+  "base_commit_sha": "41c4e639260e90378562e02e4e50777b533ae19f",
+  "prompts": {
+    "d9b96befc13a7763": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "21e90cd1-de7c-43cf-9f53-f646ea128433",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "scar3crow <rss.holmes@gmail.com>",
+      "messages": [],
+      "total_additions": 11,
+      "total_deletions": 1,
+      "accepted_lines": 11,
+      "overriden_lines": 0,
+      "messages_url": "https://usegitai.com/cas/4c322561e84b1d679efe6ccba5c09594ed264e365d9513926edb62d05c64c10e"
+    }
+  }
+}
