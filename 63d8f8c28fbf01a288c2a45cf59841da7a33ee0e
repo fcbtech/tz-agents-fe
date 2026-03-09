@@ -1,0 +1,28 @@
+src/lib/sse.ts
+  d9b96befc13a7763 25-26,34-35
+src/components/input/ChatInput.tsx
+  d9b96befc13a7763 1-2,52-56,71-90
+src/components/chat/MessageBubble.tsx
+  d9b96befc13a7763 1,31-32
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.8",
+  "base_commit_sha": "63d8f8c28fbf01a288c2a45cf59841da7a33ee0e",
+  "prompts": {
+    "d9b96befc13a7763": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "21e90cd1-de7c-43cf-9f53-f646ea128433",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "scar3crow <rss.holmes@gmail.com>",
+      "messages": [],
+      "total_additions": 38,
+      "total_deletions": 20,
+      "accepted_lines": 35,
+      "overriden_lines": 0,
+      "messages_url": "https://usegitai.com/cas/c94b63d12fabdd1464fe940de6dc185d428bd517f62dac13c79083bb09994a79"
+    }
+  }
+}
