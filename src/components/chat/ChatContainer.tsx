@@ -30,7 +30,6 @@ export default function ChatContainer() {
         </div>
 
         {/* Input */}
-        <Separator />
         <Card className="rounded-none border-0 shadow-none py-0 gap-0">
           <CardContent className="p-4">
             <ChatInput onSend={chat.sendMessage} disabled={chat.isStreaming} />

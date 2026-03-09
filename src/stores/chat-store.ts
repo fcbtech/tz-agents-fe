@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { devtools } from 'zustand/middleware'
 import type { ChatMessage, Mention } from '@/types/chat'
 import type { PODraft } from '@/types/documents'
 
@@ -29,7 +30,7 @@ interface ChatStore {
   reset: () => void
 }
 
-export const useChatStore = create<ChatStore>((set) => ({
+export const useChatStore = create<ChatStore>()(devtools((set) => ({
   sessionId: null,
   messages: [],
   isStreaming: false,
@@ -133,4 +134,9 @@ export const useChatStore = create<ChatStore>((set) => ({
       poReady: false,
       poSubmitted: false,
     }),
-}))
+}), { name: 'chat-store', enabled: true }))
+
+// Expose store for browser console debugging: __chatStore.getState()
+if (typeof window !== 'undefined') {
+  ;(window as unknown as Record<string, unknown>).__chatStore = useChatStore
+}

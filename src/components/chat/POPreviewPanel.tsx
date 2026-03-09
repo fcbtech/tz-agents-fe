@@ -106,47 +106,57 @@ export default function POPreviewPanel({
                   <TableHead className="py-2">#</TableHead>
                   <TableHead className="py-2">Item</TableHead>
                   <TableHead className="py-2 text-right">Qty</TableHead>
+                  <TableHead className="py-2">Unit</TableHead>
                   <TableHead className="py-2 text-right">Rate</TableHead>
                   <TableHead className="py-2 text-right">Total</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {draft.items!.map((item, i) => (
-                  <TableRow key={item.item_id} className="border-gray-100">
-                    <TableCell className="py-2 text-gray-400">
-                      {i + 1}
-                    </TableCell>
-                    <TableCell className="py-2">{item.name}</TableCell>
-                    <TableCell className="py-2 text-right text-gray-600">
-                      {item.qty != null
-                        ? `${item.qty} ${item.unit ?? ''}`
-                        : '\u2014'}
-                    </TableCell>
-                    <TableCell className="py-2 text-right text-gray-600">
-                      {item.rate != null
-                        ? `$${item.rate.toFixed(2)}`
-                        : '\u2014'}
-                    </TableCell>
-                    <TableCell className="py-2 text-right font-medium">
-                      {item.total != null
-                        ? `$${item.total.toFixed(2)}`
-                        : '\u2014'}
-                    </TableCell>
-                  </TableRow>
-                ))}
+                {draft.items!.map((item, i) => {
+                  const rawQty = item.qty ?? (item as Record<string, unknown>).quantity as number | undefined
+                  const qty = rawQty != null ? Number(rawQty) : null
+                  const rate = item.rate != null ? Number(item.rate) : null
+                  const total = item.total != null ? Number(item.total) : (qty != null && rate != null ? qty * rate : null)
+                  return (
+                    <TableRow key={item.item_id} className="border-gray-100">
+                      <TableCell className="py-2 text-gray-400">
+                        {i + 1}
+                      </TableCell>
+                      <TableCell className="py-2 break-words whitespace-normal max-w-[150px]">
+                        {item.name}
+                      </TableCell>
+                      <TableCell className="py-2 text-right text-gray-600">
+                        {qty != null ? qty : '\u2014'}
+                      </TableCell>
+                      <TableCell className="py-2 text-gray-600">
+                        {item.unit ?? '\u2014'}
+                      </TableCell>
+                      <TableCell className="py-2 text-right text-gray-600">
+                        {rate != null
+                          ? `\u20B9${rate.toFixed(2)}`
+                          : '\u2014'}
+                      </TableCell>
+                      <TableCell className="py-2 text-right font-medium">
+                        {total != null
+                          ? `\u20B9${total.toFixed(2)}`
+                          : '\u2014'}
+                      </TableCell>
+                    </TableRow>
+                  )
+                })}
               </TableBody>
 
               {draft.subtotal != null && (
                 <TableFooter className="bg-transparent">
                   <TableRow className="border-t-2 border-gray-300">
                     <TableCell
-                      colSpan={4}
+                      colSpan={5}
                       className="py-2 text-right font-semibold"
                     >
                       Subtotal
                     </TableCell>
                     <TableCell className="py-2 text-right font-bold">
-                      ${draft.subtotal.toFixed(2)}
+                      {'\u20B9'}{Number(draft.subtotal).toFixed(2)}
                     </TableCell>
                   </TableRow>
                 </TableFooter>
