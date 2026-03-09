@@ -1,3 +1,4 @@
+import Markdown from 'react-markdown'
 import { Card, CardContent } from '@/components/ui/card'
 import type { ChatMessage } from '@/types/chat'
 import MentionChip from './MentionChip'
@@ -27,8 +28,8 @@ export default function MessageBubble({ message }: Props) {
         </Card>
       ) : (
         <Card className="max-w-[80%] py-0 gap-0">
-          <CardContent className="px-4 py-3">
-            <p className="whitespace-pre-wrap">{message.content}</p>
+          <CardContent className="px-4 py-3 prose prose-sm max-w-none">
+            <Markdown>{message.content}</Markdown>
           </CardContent>
         </Card>
       )}

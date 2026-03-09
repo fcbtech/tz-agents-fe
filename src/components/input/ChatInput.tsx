@@ -1,3 +1,5 @@
+import { useRef } from 'react'
+import { Extension } from '@tiptap/core'
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Placeholder from '@tiptap/extension-placeholder'
@@ -47,10 +49,14 @@ function extractMentions(json: Record<string, unknown>): {
 }
 
 export default function ChatInput({ onSend, disabled }: Props) {
+  const onSendRef = useRef(onSend)
+  const disabledRef = useRef(disabled)
+  onSendRef.current = onSend
+  disabledRef.current = disabled
+
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
-        // Disable features we don't need in a chat input
         heading: false,
         blockquote: false,
         codeBlock: false,
@@ -62,20 +68,31 @@ export default function ChatInput({ onSend, disabled }: Props) {
         placeholder: 'Type a message... Use @ to mention master data',
       }),
       createMentionExtension(),
+      // Low-priority extension so mention suggestion handles Enter first
+      Extension.create({
+        name: 'submitOnEnter',
+        priority: 1,
+        addKeyboardShortcuts() {
+          return {
+            Enter: ({ editor: ed }) => {
+              if (disabledRef.current || ed.isEmpty) return false
+              const json = ed.getJSON()
+              const { text, mentions } = extractMentions(
+                json as Record<string, unknown>,
+              )
+              if (!text) return false
+              onSendRef.current(text, mentions)
+              ed.commands.clearContent()
+              return true
+            },
+          }
+        },
+      }),
     ],
     editorProps: {
       attributes: {
         class:
           'prose prose-sm max-w-none focus:outline-none min-h-[40px] max-h-[120px] overflow-y-auto',
-      },
-      handleKeyDown: (_view, event) => {
-        // Send on Enter (without Shift)
-        if (event.key === 'Enter' && !event.shiftKey) {
-          event.preventDefault()
-          handleSend()
-          return true
-        }
-        return false
       },
     },
   })

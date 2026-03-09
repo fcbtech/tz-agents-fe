@@ -22,6 +22,8 @@ export async function* streamSSE(
   const reader = response.body!.getReader()
   const decoder = new TextDecoder()
   let buffer = ''
+  let currentEvent = 'message'
+  let currentData = ''
 
   for (
     let result = await reader.read();
@@ -29,11 +31,9 @@ export async function* streamSSE(
     result = await reader.read()
   ) {
     buffer += decoder.decode(result.value, { stream: true })
-    const lines = buffer.split('\n')
+    // Normalize \r\n to \n (sse-starlette sends \r\n line endings)
+    const lines = buffer.replace(/\r\n/g, '\n').split('\n')
     buffer = lines.pop() ?? ''
-
-    let currentEvent = 'message'
-    let currentData = ''
 
     for (const line of lines) {
       if (line.startsWith('event: ')) {
