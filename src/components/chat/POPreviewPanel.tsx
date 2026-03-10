@@ -113,10 +113,19 @@ export default function POPreviewPanel({
               </TableHeader>
               <TableBody>
                 {draft.items!.map((item, i) => {
-                  const rawQty = item.qty ?? (item as Record<string, unknown>).quantity as number | undefined
+                  const rawQty =
+                    item.qty ??
+                    ((item as Record<string, unknown>).quantity as
+                      | number
+                      | undefined)
                   const qty = rawQty != null ? Number(rawQty) : null
                   const rate = item.rate != null ? Number(item.rate) : null
-                  const total = item.total != null ? Number(item.total) : (qty != null && rate != null ? qty * rate : null)
+                  const total =
+                    item.total != null
+                      ? Number(item.total)
+                      : qty != null && rate != null
+                        ? qty * rate
+                        : null
                   return (
                     <TableRow key={item.item_id} className="border-gray-100">
                       <TableCell className="py-2 text-gray-400">
@@ -132,14 +141,10 @@ export default function POPreviewPanel({
                         {item.unit ?? '\u2014'}
                       </TableCell>
                       <TableCell className="py-2 text-right text-gray-600">
-                        {rate != null
-                          ? `\u20B9${rate.toFixed(2)}`
-                          : '\u2014'}
+                        {rate != null ? `\u20B9${rate.toFixed(2)}` : '\u2014'}
                       </TableCell>
                       <TableCell className="py-2 text-right font-medium">
-                        {total != null
-                          ? `\u20B9${total.toFixed(2)}`
-                          : '\u2014'}
+                        {total != null ? `\u20B9${total.toFixed(2)}` : '\u2014'}
                       </TableCell>
                     </TableRow>
                   )
@@ -156,7 +161,8 @@ export default function POPreviewPanel({
                       Subtotal
                     </TableCell>
                     <TableCell className="py-2 text-right font-bold">
-                      {'\u20B9'}{Number(draft.subtotal).toFixed(2)}
+                      {'\u20B9'}
+                      {Number(draft.subtotal).toFixed(2)}
                     </TableCell>
                   </TableRow>
                 </TableFooter>

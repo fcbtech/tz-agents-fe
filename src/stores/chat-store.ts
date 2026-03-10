@@ -30,101 +30,9 @@ interface ChatStore {
   reset: () => void
 }
 
-export const useChatStore = create<ChatStore>()(devtools((set) => ({
-  sessionId: null,
-  messages: [],
-  isStreaming: false,
-  streamingContent: '',
-  error: null,
-  poDraft: null,
-  poReady: false,
-  poSubmitted: false,
-
-  setSessionId: (id) => set({ sessionId: id }),
-
-  addUserMessage: (content, mentions) =>
-    set((state) => ({
-      messages: [
-        ...state.messages,
-        {
-          id: crypto.randomUUID(),
-          role: 'user' as const,
-          content,
-          mentions,
-          timestamp: Date.now(),
-        },
-      ],
-    })),
-
-  addAssistantMessage: (partial) =>
-    set((state) => ({
-      messages: [
-        ...state.messages,
-        {
-          id: crypto.randomUUID(),
-          role: 'assistant' as const,
-          content: '',
-          timestamp: Date.now(),
-          ...partial,
-        },
-      ],
-    })),
-
-  appendStreamingContent: (token) =>
-    set((state) => ({
-      streamingContent: state.streamingContent + token,
-    })),
-
-  finalizeStreaming: () =>
-    set((state) => {
-      if (!state.streamingContent) return state
-      return {
-        messages: [
-          ...state.messages,
-          {
-            id: crypto.randomUUID(),
-            role: 'assistant' as const,
-            content: state.streamingContent,
-            timestamp: Date.now(),
-          },
-        ],
-        streamingContent: '',
-        isStreaming: false,
-      }
-    }),
-
-  setStreaming: (streaming) => set({ isStreaming: streaming }),
-
-  setError: (error) => set({ error, isStreaming: false }),
-
-  markClarificationAnswered: (messageId, selectedValue) =>
-    set((state) => ({
-      messages: state.messages.map((m) =>
-        m.id === messageId && m.clarification
-          ? {
-              ...m,
-              clarification: {
-                ...m.clarification,
-                answered: true,
-                selectedValue,
-              },
-            }
-          : m,
-      ),
-    })),
-
-  updatePODraft: (draft) =>
-    set((state) => ({
-      // Merge incoming draft fields with existing draft
-      poDraft: state.poDraft ? { ...state.poDraft, ...draft } : draft,
-    })),
-
-  setPOReady: (ready) => set({ poReady: ready }),
-
-  setPOSubmitted: (submitted) => set({ poSubmitted: submitted }),
-
-  reset: () =>
-    set({
+export const useChatStore = create<ChatStore>()(
+  devtools(
+    (set) => ({
       sessionId: null,
       messages: [],
       isStreaming: false,
@@ -133,8 +41,105 @@ export const useChatStore = create<ChatStore>()(devtools((set) => ({
       poDraft: null,
       poReady: false,
       poSubmitted: false,
+
+      setSessionId: (id) => set({ sessionId: id }),
+
+      addUserMessage: (content, mentions) =>
+        set((state) => ({
+          messages: [
+            ...state.messages,
+            {
+              id: crypto.randomUUID(),
+              role: 'user' as const,
+              content,
+              mentions,
+              timestamp: Date.now(),
+            },
+          ],
+        })),
+
+      addAssistantMessage: (partial) =>
+        set((state) => ({
+          messages: [
+            ...state.messages,
+            {
+              id: crypto.randomUUID(),
+              role: 'assistant' as const,
+              content: '',
+              timestamp: Date.now(),
+              ...partial,
+            },
+          ],
+        })),
+
+      appendStreamingContent: (token) =>
+        set((state) => ({
+          streamingContent: state.streamingContent + token,
+        })),
+
+      finalizeStreaming: () =>
+        set((state) => {
+          if (!state.streamingContent) return state
+          return {
+            messages: [
+              ...state.messages,
+              {
+                id: crypto.randomUUID(),
+                role: 'assistant' as const,
+                content: state.streamingContent,
+                timestamp: Date.now(),
+              },
+            ],
+            streamingContent: '',
+            isStreaming: false,
+          }
+        }),
+
+      setStreaming: (streaming) => set({ isStreaming: streaming }),
+
+      setError: (error) => set({ error, isStreaming: false }),
+
+      markClarificationAnswered: (messageId, selectedValue) =>
+        set((state) => ({
+          messages: state.messages.map((m) =>
+            m.id === messageId && m.clarification
+              ? {
+                  ...m,
+                  clarification: {
+                    ...m.clarification,
+                    answered: true,
+                    selectedValue,
+                  },
+                }
+              : m,
+          ),
+        })),
+
+      updatePODraft: (draft) =>
+        set((state) => ({
+          // Merge incoming draft fields with existing draft
+          poDraft: state.poDraft ? { ...state.poDraft, ...draft } : draft,
+        })),
+
+      setPOReady: (ready) => set({ poReady: ready }),
+
+      setPOSubmitted: (submitted) => set({ poSubmitted: submitted }),
+
+      reset: () =>
+        set({
+          sessionId: null,
+          messages: [],
+          isStreaming: false,
+          streamingContent: '',
+          error: null,
+          poDraft: null,
+          poReady: false,
+          poSubmitted: false,
+        }),
     }),
-}), { name: 'chat-store', enabled: true }))
+    { name: 'chat-store', enabled: true },
+  ),
+)
 
 // Expose store for browser console debugging: __chatStore.getState()
 if (typeof window !== 'undefined') {

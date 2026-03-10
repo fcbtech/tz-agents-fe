@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import type { ChatMessage } from '@/types/chat'
 import MessageBubble from './MessageBubble'
 import ClarificationCard from './ClarificationCard'
@@ -26,6 +26,19 @@ export default function MessageList({
 }: Props) {
   const bottomRef = useRef<HTMLDivElement>(null)
 
+  const streamingMessage = useMemo(
+    () =>
+      streamingContent
+        ? ({
+            id: 'streaming',
+            role: 'assistant',
+            content: streamingContent,
+            timestamp: Date.now(),
+          } as ChatMessage)
+        : null,
+    [streamingContent],
+  )
+
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, streamingContent])
@@ -52,16 +65,7 @@ export default function MessageList({
       })}
 
       {/* Streaming text (not yet finalized) */}
-      {streamingContent && (
-        <MessageBubble
-          message={{
-            id: 'streaming',
-            role: 'assistant',
-            content: streamingContent,
-            timestamp: Date.now(),
-          }}
-        />
-      )}
+      {streamingMessage && <MessageBubble message={streamingMessage} />}
 
       {isStreaming && !streamingContent && <TypingIndicator />}
 
