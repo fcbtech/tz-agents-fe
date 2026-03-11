@@ -1,3 +1,4 @@
+import { useAuthStore } from '@/stores/auth-store'
 import { API_BASE_URL } from './constants'
 
 export interface SSEEvent {
@@ -9,9 +10,13 @@ export async function* streamSSE(
   path: string,
   body: Record<string, unknown>,
 ): AsyncGenerator<SSEEvent> {
+  const token = useAuthStore.getState().accessToken
   const response = await fetch(`${API_BASE_URL}${path}`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
     body: JSON.stringify(body),
   })
 
