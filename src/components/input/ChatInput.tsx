@@ -30,7 +30,7 @@ function extractMentions(json: Record<string, unknown>): {
       const metadata = attrs.metadata as Record<string, unknown> | undefined
       mentions.push({
         type: category ?? 'counterparty',
-        id: attrs.id as string,
+        id: (attrs.id as string | undefined) ?? '',
         displayName: attrs.label as string,
         metadata: metadata ?? {},
       })

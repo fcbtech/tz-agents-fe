@@ -5,7 +5,20 @@ import {
   useImperativeHandle,
   useCallback,
 } from 'react'
-import { Building, Package, FileText, MapPin, Search } from 'lucide-react'
+import {
+  Building,
+  Package,
+  FileText,
+  MapPin,
+  Search,
+  Receipt,
+  Hash,
+  CreditCard,
+  Warehouse,
+  MapPinned,
+  Landmark,
+  Truck,
+} from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -18,8 +31,16 @@ import type { LucideIcon } from 'lucide-react'
 const CATEGORIES: Array<MasterDataCategory & { icon: LucideIcon }> = [
   { type: 'counterparty', label: 'Counterparties', icon: Building },
   { type: 'item', label: 'Items', icon: Package },
-  { type: 'terms', label: 'Terms & Conditions', icon: FileText },
+  { type: 'tax', label: 'Tax', icon: Receipt },
+  { type: 'doc_number', label: 'Document Numbers', icon: Hash },
+  { type: 'payment_terms', label: 'Payment Terms', icon: CreditCard },
+  { type: 'store', label: 'Stores', icon: Warehouse },
   { type: 'billing_address', label: 'Billing Addresses', icon: MapPin },
+  { type: 'delivery_location', label: 'Delivery Locations', icon: MapPinned },
+  { type: 'supplier_address', label: 'Supplier Addresses', icon: MapPin },
+  { type: 'bank', label: 'Banks', icon: Landmark },
+  { type: 'logistics', label: 'Logistics', icon: Truck },
+  { type: 'terms_and_conditions', label: 'Terms & Conditions', icon: FileText },
 ]
 
 interface Props {

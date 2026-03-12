@@ -12,7 +12,7 @@ export function useChat() {
 
     try {
       for await (const event of streamSSE('/api/chat', {
-        session_id: store.sessionId,
+        session_id: store.sessionId ?? '',
         message: text,
         mentions,
         action: 'message',

@@ -1,5 +1,17 @@
 export interface Mention {
-  type: 'counterparty' | 'item' | 'terms' | 'billing_address'
+  type:
+    | 'counterparty'
+    | 'item'
+    | 'tax'
+    | 'doc_number'
+    | 'payment_terms'
+    | 'store'
+    | 'billing_address'
+    | 'delivery_location'
+    | 'supplier_address'
+    | 'bank'
+    | 'logistics'
+    | 'terms_and_conditions'
   id: string
   displayName: string
   metadata: Record<string, unknown>

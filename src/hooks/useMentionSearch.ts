@@ -19,10 +19,15 @@ export function useMentionSearch(entityType: string | null, query: string) {
       setLoading(true)
       try {
         const params = new URLSearchParams({ q: query, limit: '10' })
-        const data = await apiFetch<{ data: MasterDataItem[] }>(
-          `/api/master/${entityType}?${params}`,
+        const data = await apiFetch<{
+          data: Array<MasterDataItem & { title?: string }>
+        }>(`/api/master/${entityType}?${params}`)
+        setResults(
+          data.data.map((item) => ({
+            ...item,
+            name: item.name || item.title || (item.itemid as string) || '',
+          })),
         )
-        setResults(data.data)
       } catch {
         setResults([])
       } finally {
