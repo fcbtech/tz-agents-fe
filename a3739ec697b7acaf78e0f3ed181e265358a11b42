@@ -1,0 +1,26 @@
+src/types/documents.ts
+  0a9b3fa9ceddf90c 2-4,6-123,126-139
+src/components/chat/POPreviewPanel.tsx
+  0a9b3fa9ceddf90c 58-59,61-66,89-93,95,99-100,103-104,106-108,137-139,144,151,167,171
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.10",
+  "base_commit_sha": "a3739ec697b7acaf78e0f3ed181e265358a11b42",
+  "prompts": {
+    "0a9b3fa9ceddf90c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "13be3b69-581b-4cba-837f-46b4e6139b72",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "scar3crow <rss.holmes@gmail.com>",
+      "messages": [],
+      "total_additions": 182,
+      "total_deletions": 62,
+      "accepted_lines": 165,
+      "overriden_lines": 0,
+      "messages_url": "https://usegitai.com/cas/aefd2f9e4f380d10184561939fd43dc52d45a68b6952f0fe4988bbc939198536"
+    }
+  }
+}
