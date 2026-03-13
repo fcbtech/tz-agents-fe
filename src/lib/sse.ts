@@ -1,5 +1,6 @@
 import { useAuthStore } from '@/stores/auth-store'
 import { API_BASE_URL } from './constants'
+import { getValidToken, refreshAccessToken } from './token-refresh'
 
 export interface SSEEvent {
   event: string
@@ -10,8 +11,8 @@ export async function* streamSSE(
   path: string,
   body: Record<string, unknown>,
 ): AsyncGenerator<SSEEvent> {
-  const token = useAuthStore.getState().accessToken
-  const response = await fetch(`${API_BASE_URL}${path}`, {
+  const token = await getValidToken()
+  let response = await fetch(`${API_BASE_URL}${path}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -20,7 +21,20 @@ export async function* streamSSE(
     body: JSON.stringify(body),
   })
 
+  if (response.status === 401) {
+    const newToken = await refreshAccessToken()
+    response = await fetch(`${API_BASE_URL}${path}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${newToken}`,
+      },
+      body: JSON.stringify(body),
+    })
+  }
+
   if (!response.ok) {
+    if (response.status === 401) useAuthStore.getState().logout()
     throw new Error(`Chat request failed: ${response.status}`)
   }
 
