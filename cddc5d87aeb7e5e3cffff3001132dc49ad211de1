@@ -1,0 +1,32 @@
+src/lib/api/auth.ts
+  213fd3079f60a6b1 1-73
+src/routes/login.tsx
+  213fd3079f60a6b1 17
+src/lib/hooks/useMentionSearch.ts
+  213fd3079f60a6b1 2,22,24
+src/lib/api/sse.ts
+  213fd3079f60a6b1 3
+src/lib/api/axios.ts
+  213fd3079f60a6b1 2-4,12-43
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.10",
+  "base_commit_sha": "cddc5d87aeb7e5e3cffff3001132dc49ad211de1",
+  "prompts": {
+    "213fd3079f60a6b1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d6d9ea86-51f3-41b6-b092-a2c7457dba94",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "scar3crow <rss.holmes@gmail.com>",
+      "messages": [],
+      "total_additions": 114,
+      "total_deletions": 6,
+      "accepted_lines": 113,
+      "overriden_lines": 0,
+      "messages_url": "https://usegitai.com/cas/ba96d7cb9349e71650fbb69148a8a9cfd44df36b3a634684700784aa273b8ffe"
+    }
+  }
+}
