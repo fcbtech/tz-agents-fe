@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { login } from '@/lib/api/auth-api'
+import { login } from '@/lib/api/auth'
 import { useAuthStore } from '@/lib/store/auth-store'
 import type { AuthResponse } from '@/lib/types/auth'
 

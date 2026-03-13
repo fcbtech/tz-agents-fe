@@ -1,5 +1,14 @@
 import { authClient } from './axios'
 import { useAuthStore } from '@/lib/store/auth-store'
+import type { AuthResponse, LoginPayload } from '@/lib/types/auth'
+
+export async function login(payload: LoginPayload): Promise<AuthResponse> {
+  const { data } = await authClient.post<AuthResponse>(
+    '/main/login/password-login/',
+    payload,
+  )
+  return data
+}
 
 interface RefreshTokenResponse {
   refresh_token: string
@@ -8,11 +17,6 @@ interface RefreshTokenResponse {
 
 let refreshPromise: Promise<string> | null = null
 
-/**
- * Refreshes the access token using the stored refresh token.
- * Uses a mutex so concurrent callers share a single refresh request.
- * Returns the new access token, or throws (and logs out) on failure.
- */
 export async function refreshAccessToken(): Promise<string> {
   if (refreshPromise) return refreshPromise
 
@@ -47,10 +51,6 @@ export async function refreshAccessToken(): Promise<string> {
   return refreshPromise
 }
 
-/**
- * Returns the current access token, refreshing it first if it's
- * expired or about to expire (within 60 seconds).
- */
 export async function getValidToken(): Promise<string | null> {
   const { accessToken } = useAuthStore.getState()
   if (!accessToken) return null
@@ -68,7 +68,6 @@ function isTokenExpiringSoon(token: string, thresholdSeconds: number): boolean {
     const exp = payload.exp as number
     return Date.now() >= (exp - thresholdSeconds) * 1000
   } catch {
-    // If we can't decode, let the server decide
     return false
   }
 }
