@@ -1,6 +1,7 @@
 import {
   useState,
   useEffect,
+  useRef,
   forwardRef,
   useImperativeHandle,
   useCallback,
@@ -137,9 +138,19 @@ const MentionDropdown = forwardRef((props: Props, ref) => {
     },
   }))
 
+  const listRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     setSelectedIndex(0)
   }, [results, filteredCategories])
+
+  // Scroll selected item into view
+  useEffect(() => {
+    const container = listRef.current
+    if (!container) return
+    const el = container.querySelector(`[data-index="${selectedIndex}"]`)
+    if (el) el.scrollIntoView({ block: 'nearest' })
+  }, [selectedIndex])
 
   // Phase 1: Category selection
   if (phase === 'categories') {
@@ -164,8 +175,8 @@ const MentionDropdown = forwardRef((props: Props, ref) => {
           </div>
         </div>
         <Separator />
-        <CardContent className="p-0">
-          <ScrollArea className="max-h-60">
+        <CardContent className="p-0" ref={listRef}>
+          <ScrollArea className="[&_[data-slot=scroll-area-viewport]]:max-h-60">
             {filteredCategories.length === 0 && (
               <div className="px-3 py-4 text-center text-sm text-gray-400">
                 No categories found
@@ -176,6 +187,7 @@ const MentionDropdown = forwardRef((props: Props, ref) => {
               return (
                 <Button
                   key={cat.type}
+                  data-index={i}
                   variant="ghost"
                   onClick={() => selectCategory(cat.type)}
                   className={`w-full justify-start h-auto px-3 py-2.5 text-sm rounded-none
@@ -230,8 +242,8 @@ const MentionDropdown = forwardRef((props: Props, ref) => {
       </div>
       <Separator />
 
-      <CardContent className="p-0">
-        <ScrollArea className="max-h-48">
+      <CardContent className="p-0" ref={listRef}>
+        <ScrollArea className="[&_[data-slot=scroll-area-viewport]]:max-h-48">
           {loading && (
             <div className="px-3 py-4 text-center text-sm text-gray-400">
               Loading...
@@ -246,6 +258,7 @@ const MentionDropdown = forwardRef((props: Props, ref) => {
             results.map((item, i) => (
               <Button
                 key={item.id}
+                data-index={i}
                 variant="ghost"
                 onClick={() => selectItem(item)}
                 className={`w-full justify-start h-auto px-3 py-2 text-sm rounded-none
