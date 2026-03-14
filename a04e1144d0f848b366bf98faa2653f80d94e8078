@@ -1,0 +1,24 @@
+src/components/input/MentionDropdown.tsx
+  0ce95eb310630942 31,53,59-64,69,85-86,89-92,103-105,111-114,116-120,123-131,134-136,142,154-166,168-174,181-182,189,225
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.12",
+  "base_commit_sha": "a04e1144d0f848b366bf98faa2653f80d94e8078",
+  "prompts": {
+    "0ce95eb310630942": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "eb74ae04-aa3a-47bd-9eaf-448257feeefb",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "scar3crow <rss.holmes@gmail.com>",
+      "messages": [],
+      "total_additions": 102,
+      "total_deletions": 66,
+      "accepted_lines": 66,
+      "overriden_lines": 0,
+      "messages_url": "https://usegitai.com/cas/8c3c968e87b4eacdb52c8820970734071bc790f1612dc637f35e014982b7ca61"
+    }
+  }
+}
