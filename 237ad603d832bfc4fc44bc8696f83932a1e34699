@@ -1,0 +1,26 @@
+src/components/ui/scroll-area.tsx
+  0ce95eb310630942 16
+src/components/input/MentionDropdown.tsx
+  0ce95eb310630942 4,141-142,147-153,178-179,190,245-246,261
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.12",
+  "base_commit_sha": "237ad603d832bfc4fc44bc8696f83932a1e34699",
+  "prompts": {
+    "0ce95eb310630942": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "eb74ae04-aa3a-47bd-9eaf-448257feeefb",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "scar3crow <rss.holmes@gmail.com>",
+      "messages": [],
+      "total_additions": 18,
+      "total_deletions": 5,
+      "accepted_lines": 18,
+      "overriden_lines": 0,
+      "messages_url": "https://usegitai.com/cas/6b8ebb635a3af1db509f39cb83d1252acf2af6c5bc5dcc966df5c99320edc8df"
+    }
+  }
+}
