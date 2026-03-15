@@ -1,0 +1,24 @@
+src/components/ui/sidebar.tsx
+  6c0d82faefb1e370 94
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.12",
+  "base_commit_sha": "8da068193c9b11866015b9d7682e30b79285c5ec",
+  "prompts": {
+    "6c0d82faefb1e370": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "b60ad09e-245c-478c-937a-329d6ba48d92",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "scar3crow <rss.holmes@gmail.com>",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0,
+      "messages_url": "https://usegitai.com/cas/5bc5245f87655ee5f4c03b8510dcf58c00ed9d1071605205a95e6a8d1418b9b5"
+    }
+  }
+}
