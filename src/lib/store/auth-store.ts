@@ -1,20 +1,16 @@
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 
-interface AuthState {
+interface AuthStore {
   accessToken: string | null
   refreshToken: string | null
   userEmail: string | null
   isAuthenticated: boolean
-  setTokens: (
-    accessToken: string,
-    refreshToken: string,
-    email?: string,
-  ) => void
+  setTokens: (accessToken: string, refreshToken: string, email?: string) => void
   logout: () => void
 }
 
-export const useAuthStore = create<AuthState>()(
+export const useAuthStore = create<AuthStore>()(
   devtools(
     persist(
       (set) => ({
