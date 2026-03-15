@@ -29,7 +29,9 @@ import { useMentionSearch } from '@/lib/hooks/useMentionSearch'
 import type { MasterDataCategory } from '@/lib/types/master-data'
 import type { LucideIcon } from 'lucide-react'
 
-const CATEGORIES: Array<Omit<MasterDataCategory, 'icon'> & { icon: LucideIcon }> = [
+const CATEGORIES: Array<
+  Omit<MasterDataCategory, 'icon'> & { icon: LucideIcon }
+> = [
   { type: 'counterparty', label: 'Counterparties', icon: Building },
   { type: 'item', label: 'Items', icon: Package },
   { type: 'tax', label: 'Tax', icon: Receipt },

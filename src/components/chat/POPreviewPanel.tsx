@@ -137,8 +137,7 @@ export default function POPreviewPanel({
                   const qty =
                     item.quantity != null ? Number(item.quantity) : null
                   const rate = item.price != null ? Number(item.price) : null
-                  const total =
-                    qty != null && rate != null ? qty * rate : null
+                  const total = qty != null && rate != null ? qty * rate : null
                   return (
                     <TableRow
                       key={item.product ?? i}

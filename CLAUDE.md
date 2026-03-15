@@ -115,12 +115,14 @@ File-based routing via `@tanstack/router-plugin`. Routes live in `src/routes/` a
 Two stores, both in `src/lib/store/`:
 
 **`chat-store.ts`** — Primary chat state:
+
 - `sessionId`, `messages[]`, `isStreaming`, `streamingContent`, `error`
 - PO state: `poDraft`, `poReady`, `poSubmitted`
 - Actions: `addUserMessage()`, `appendStreamingContent()`, `finalizeStreaming()`, `updatePODraft()`, `reset()`, etc.
 - Enabled with Zustand devtools middleware
 
 **`auth-store.ts`** — Auth state (persisted to localStorage with key `tz-auth`):
+
 - `accessToken`, `refreshToken`, `isAuthenticated`
 - Actions: `setTokens()`, `logout()`
 
@@ -171,17 +173,20 @@ The `MentionExtension.ts` configures the Tiptap mention extension with custom at
 ### API Layer
 
 **Axios** (`lib/api/axios.ts`):
+
 - `apiClient` — Main API instance pointing to backend (default `localhost:8000`)
 - `authClient` — Separate instance for auth endpoints
 - Request interceptor: Injects `Authorization: Bearer {token}` header
 - Response interceptor: Auto-refreshes token on 401, retries request once, logs out on failure
 
 **SSE Streaming** (`lib/api/sse.ts`):
+
 - `streamSSE()` — Async generator using `fetch()` with streaming response body
 - Parses SSE format (`event:` + `data:` lines), yields `{ event, data }` objects
 - Handles 401 auto-refresh + retry
 
 **Token Management** (`lib/api/auth.ts`):
+
 - `getValidToken()` — Returns valid token, proactively refreshes if expiring within 60s
 - `refreshAccessToken()` — Deduplicates concurrent refresh calls via shared promise
 - JWT expiry decoded from token payload

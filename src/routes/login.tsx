@@ -31,7 +31,7 @@ function LoginPage() {
   const loginMutation = useMutation({
     mutationFn: login,
     onSuccess: (data: AuthResponse) => {
-      setTokens(data.data.access_token, data.data.refresh_token)
+      setTokens(data.data.access_token, data.data.refresh_token, email)
       navigate({ to: '/' })
     },
   })

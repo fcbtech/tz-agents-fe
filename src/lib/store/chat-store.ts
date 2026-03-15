@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { devtools } from 'zustand/middleware'
+import { devtools, persist } from 'zustand/middleware'
 import type { ChatMessage, Mention } from '@/lib/types/chat'
 import type { PODraft } from '@/lib/types/documents'
 
@@ -32,6 +32,7 @@ interface ChatStore {
 
 export const useChatStore = create<ChatStore>()(
   devtools(
+    persist(
     (set) => ({
       sessionId: null,
       messages: [],
@@ -137,6 +138,17 @@ export const useChatStore = create<ChatStore>()(
           poSubmitted: false,
         }),
     }),
+    {
+      name: 'tz-chat',
+      partialize: (state) => ({
+        sessionId: state.sessionId,
+        messages: state.messages,
+        poDraft: state.poDraft,
+        poReady: state.poReady,
+        poSubmitted: state.poSubmitted,
+      }),
+    },
+    ),
     { name: 'chat-store', enabled: true },
   ),
 )
