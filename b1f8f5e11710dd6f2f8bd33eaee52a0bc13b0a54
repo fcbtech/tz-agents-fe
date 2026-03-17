@@ -1,0 +1,24 @@
+src/lib/hooks/useMentionSearch.ts
+  6c0d82faefb1e370 28-32
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.12",
+  "base_commit_sha": "b1f8f5e11710dd6f2f8bd33eaee52a0bc13b0a54",
+  "prompts": {
+    "6c0d82faefb1e370": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "b60ad09e-245c-478c-937a-329d6ba48d92",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "scar3crow <rss.holmes@gmail.com>",
+      "messages": [],
+      "total_additions": 5,
+      "total_deletions": 0,
+      "accepted_lines": 5,
+      "overriden_lines": 0,
+      "messages_url": "https://usegitai.com/cas/38b9a7dbc32c98bde3808c6e532c6b99c40b715f5a0da91d401eda95920d105b"
+    }
+  }
+}
