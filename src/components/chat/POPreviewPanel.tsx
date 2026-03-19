@@ -100,6 +100,10 @@ export default function POPreviewPanel({
             value={draft.primary_document_details.payment_terms?.name}
           />
           <FieldRow
+            label="Store"
+            value={draft.primary_document_details.store_details?.name}
+          />
+          <FieldRow
             label="Delivery Date"
             value={draft.primary_document_details.delivery_date}
           />
