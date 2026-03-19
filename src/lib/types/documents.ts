@@ -6,6 +6,7 @@
 
 export interface IdRef {
   id: string
+  name: string
 }
 
 export interface CompanyRef {
@@ -43,8 +44,8 @@ export interface CustomField {
 }
 
 export interface POItem {
-  product?: string
-  name?: string
+  product: string
+  name: string
   quantity?: string
   unit?: IdRef
   price?: number

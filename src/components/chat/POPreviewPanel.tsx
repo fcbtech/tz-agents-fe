@@ -97,7 +97,7 @@ export default function POPreviewPanel({
           />
           <FieldRow
             label="Payment Terms"
-            value={draft.primary_document_details.payment_terms?.id}
+            value={draft.primary_document_details.payment_terms?.name}
           />
           <FieldRow
             label="Delivery Date"
@@ -106,14 +106,14 @@ export default function POPreviewPanel({
           <FieldRow
             label="Logistics"
             value={
-              draft.additional_document_details.selected_logistic_details?.id
+              draft.additional_document_details.selected_logistic_details?.name
             }
           />
           <FieldRow
             label="Terms & Conditions"
             value={
               draft.additional_document_details
-                .selected_terms_and_conditions?.id
+                .selected_terms_and_conditions?.name
             }
           />
           {draft.comment?.value && (
@@ -153,14 +153,14 @@ export default function POPreviewPanel({
                   const total = qty != null && rate != null ? qty * rate : null
                   return (
                     <TableRow
-                      key={item.product ?? i}
+                      key={item.product}
                       className="border-gray-100"
                     >
                       <TableCell className="py-2 text-gray-400">
                         {i + 1}
                       </TableCell>
                       <TableCell className="py-2 break-words whitespace-normal max-w-[150px]">
-                        {item.name ?? '\u2014'}
+                        {item.name}
                       </TableCell>
                       <TableCell className="py-2 text-right text-gray-600">
                         {qty != null ? qty : '\u2014'}
