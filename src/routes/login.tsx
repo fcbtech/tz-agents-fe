@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 import { Loader2 } from 'lucide-react'
 
@@ -26,12 +26,14 @@ function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
   const setTokens = useAuthStore((s) => s.setTokens)
 
   const loginMutation = useMutation({
     mutationFn: login,
     onSuccess: (data: AuthResponse) => {
       setTokens(data.data.access_token, data.data.refresh_token, email)
+      queryClient.invalidateQueries({ queryKey: ['profile'] })
       navigate({ to: '/' })
     },
   })
