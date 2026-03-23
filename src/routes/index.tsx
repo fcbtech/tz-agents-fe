@@ -13,23 +13,18 @@ import { useAuthStore } from '@/lib/store/auth-store'
 import { useChatStore } from '@/lib/store/chat-store'
 
 export const Route = createFileRoute('/')({
-  validateSearch: (search: Record<string, unknown>) => ({
-    sessionId:
-      typeof search.sessionId === 'string' && search.sessionId.length > 0
-        ? search.sessionId
-        : undefined,
-  }),
-  beforeLoad: ({ search }) => {
+  beforeLoad: ({ location }) => {
     if (!useAuthStore.getState().isAuthenticated) {
       throw redirect({ to: '/login' })
     }
     // Prepare store for the incoming session (or reset for new chat)
     const store = useChatStore.getState()
-    if (!search.sessionId) {
+    const sessionId = new URLSearchParams(location.searchStr).get('sessionId')
+    if (!sessionId) {
       store.reset()
-    } else if (store.sessionId !== search.sessionId) {
+    } else if (store.sessionId !== sessionId) {
       store.reset()
-      store.setSessionId(search.sessionId)
+      store.setSessionId(sessionId)
     }
   },
   component: ChatPage,

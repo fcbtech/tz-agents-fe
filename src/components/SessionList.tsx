@@ -1,4 +1,4 @@
-import { useNavigate, useSearch } from '@tanstack/react-router'
+import { useLocation, useNavigate } from '@tanstack/react-router'
 import { MessageSquare } from 'lucide-react'
 
 import {
@@ -15,7 +15,12 @@ import { useChatStore } from '@/lib/store/chat-store'
 
 export default function SessionList() {
   const navigate = useNavigate({ from: '/' })
-  const { sessionId: activeSessionId } = useSearch({ from: '/' })
+  const activeSessionId = useLocation({
+    select: (location) => {
+      const sessionId = new URLSearchParams(location.searchStr).get('sessionId')
+      return sessionId && sessionId.length > 0 ? sessionId : undefined
+    },
+  })
   const isStreaming = useChatStore((s) => s.isStreaming)
   const { data, isLoading } = useSessionList()
 
