@@ -1,0 +1,26 @@
+src/lib/store/auth-store.ts
+  8627c7e5e9834194 28
+src/lib/utils/jwt.ts
+  8627c7e5e9834194 11,17-20
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.15",
+  "base_commit_sha": "e309678011549b37546a0663233d5da37827eb2a",
+  "prompts": {
+    "8627c7e5e9834194": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "25fd6d92-03b5-49ae-a0b9-ee4d17e4686b",
+        "model": "composer-2-fast"
+      },
+      "human_author": "pratik-dev-25 <pratik.m@letstranzact.com>",
+      "messages": [],
+      "total_additions": 26,
+      "total_deletions": 24,
+      "accepted_lines": 13,
+      "overriden_lines": 0,
+      "messages_url": "https://usegitai.com/cas/cbeb77170b463d0d0e2a6109d86317ed89881437bb1ffb71dc899cfda302e9e6"
+    }
+  }
+}
