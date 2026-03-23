@@ -25,15 +25,8 @@ export const useAuthStore = create<AuthStore>()(
         companyId: null,
         isAuthenticated: false,
         setTokens: (accessToken, refreshToken, email) => {
-          let userId: number | null = null
-          let companyId: number | null = null
-          try {
-            const claims = decodeJWTClaims(accessToken)
-            userId = claims.user_id
-            companyId = claims.company_id
-          } catch {
-            // JWT decode failed — store tokens anyway, IDs will be null
-          }
+          const { user_id: userId, company_id: companyId } =
+            decodeJWTClaims(accessToken)
           set((state) => ({
             accessToken,
             refreshToken,
