@@ -17,6 +17,11 @@ interface ChatStore {
 
   // Actions
   setSessionId: (id: string) => void
+  loadSession: (
+    sessionId: string,
+    messages: ChatMessage[],
+    poDraft: PODraft | null,
+  ) => void
   addUserMessage: (content: string, mentions?: Mention[]) => void
   addAssistantMessage: (partial: Partial<ChatMessage>) => void
   appendStreamingContent: (token: string) => void
@@ -44,6 +49,18 @@ export const useChatStore = create<ChatStore>()(
         poSubmitted: false,
 
         setSessionId: (id) => set({ sessionId: id }),
+
+        loadSession: (sessionId, messages, poDraft) =>
+          set({
+            sessionId,
+            messages,
+            poDraft,
+            isStreaming: false,
+            streamingContent: '',
+            error: null,
+            poReady: false,
+            poSubmitted: false,
+          }),
 
         addUserMessage: (content, mentions) =>
           set((state) => ({
@@ -141,8 +158,6 @@ export const useChatStore = create<ChatStore>()(
       {
         name: 'tz-chat',
         partialize: (state) => ({
-          sessionId: state.sessionId,
-          messages: state.messages,
           poDraft: state.poDraft,
           poReady: state.poReady,
           poSubmitted: state.poSubmitted,

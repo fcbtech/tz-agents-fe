@@ -1,15 +1,23 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
-import { useAuthStore } from '@/lib/store/auth-store'
-import {
-  SidebarProvider,
-  SidebarInset,
-  SidebarTrigger,
-} from '@/components/ui/sidebar'
+
 import AppSidebar from '@/components/AppSidebar'
 import ChatContainer from '@/components/chat/ChatContainer'
 import { Separator } from '@/components/ui/separator'
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from '@/components/ui/sidebar'
+import { useSessionNavigation } from '@/lib/hooks/useSessionNavigation'
+import { useAuthStore } from '@/lib/store/auth-store'
 
 export const Route = createFileRoute('/')({
+  validateSearch: (search: Record<string, unknown>) => ({
+    sessionId:
+      typeof search.sessionId === 'string' && search.sessionId.length > 0
+        ? search.sessionId
+        : undefined,
+  }),
   beforeLoad: () => {
     if (!useAuthStore.getState().isAuthenticated) {
       throw redirect({ to: '/login' })
@@ -19,6 +27,8 @@ export const Route = createFileRoute('/')({
 })
 
 function ChatPage() {
+  useSessionNavigation()
+
   return (
     <SidebarProvider>
       <AppSidebar />

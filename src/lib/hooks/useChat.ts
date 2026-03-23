@@ -1,9 +1,14 @@
-import { useChatStore } from '@/lib/store/chat-store'
+import { useQueryClient } from '@tanstack/react-query'
+import { useNavigate } from '@tanstack/react-router'
+
 import { streamSSE } from '@/lib/api/sse'
+import { useChatStore } from '@/lib/store/chat-store'
 import type { Mention } from '@/lib/types/chat'
 
 export function useChat() {
   const store = useChatStore()
+  const queryClient = useQueryClient()
+  const navigate = useNavigate({ from: '/' })
 
   const sendMessage = async (text: string, mentions: Mention[] = []) => {
     store.addUserMessage(text, mentions)
@@ -22,6 +27,11 @@ export function useChat() {
         switch (event.event) {
           case 'session':
             store.setSessionId(data.session_id)
+            navigate({
+              to: '/',
+              search: { sessionId: data.session_id },
+              replace: true,
+            })
             break
           case 'token':
             store.appendStreamingContent(data.content)
@@ -50,6 +60,7 @@ export function useChat() {
             break
           case 'done':
             store.finalizeStreaming()
+            queryClient.invalidateQueries({ queryKey: ['sessions'] })
             break
         }
       }
