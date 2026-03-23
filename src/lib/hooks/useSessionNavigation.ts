@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useNavigate, useSearch } from '@tanstack/react-router'
+import { useSearch } from '@tanstack/react-router'
 
 import { useSessionDetail } from '@/lib/hooks/useSessions'
 import { useChatStore } from '@/lib/store/chat-store'
@@ -9,47 +9,25 @@ import {
 } from '@/lib/utils/session-messages'
 
 /**
- * Syncs URL `sessionId` search param with chat store: new chat clears store;
- * existing id loads detail from API in one atomic loadSession.
+ * Loads session detail from API into the chat store when a sessionId is
+ * present in the URL. Store reset on navigation is handled by the route's
+ * `beforeLoad`; error redirect is handled declaratively via `<Navigate>`.
+ *
+ * Returns query state so the route component can render `<Navigate>` on error.
  */
 export function useSessionNavigation() {
-  const navigate = useNavigate({ from: '/' })
   const { sessionId } = useSearch({ from: '/' })
-  const { data, isSuccess, isError } = useSessionDetail(sessionId ?? null)
-  const reset = useChatStore((s) => s.reset)
+  const query = useSessionDetail(sessionId ?? null)
   const loadSession = useChatStore((s) => s.loadSession)
 
   useEffect(() => {
-    if (!sessionId) {
-      reset()
-      return
-    }
-    const s = useChatStore.getState()
-    if (s.sessionId !== sessionId) {
-      useChatStore.setState({
-        sessionId,
-        messages: [],
-        streamingContent: '',
-        error: null,
-        isStreaming: false,
-        poDraft: null,
-        poReady: false,
-        poSubmitted: false,
-      })
-    }
-  }, [sessionId, reset])
-
-  useEffect(() => {
-    if (!sessionId || !isSuccess) return
+    if (!sessionId || !query.isSuccess) return
     loadSession(
       sessionId,
-      mapStoredMessagesToChat(data.messages),
-      poDraftFromApi(data.po_draft),
+      mapStoredMessagesToChat(query.data.messages),
+      poDraftFromApi(query.data.po_draft),
     )
-  }, [sessionId, isSuccess, data, loadSession])
+  }, [sessionId, query.isSuccess, query.data, loadSession])
 
-  useEffect(() => {
-    if (!sessionId || !isError) return
-    navigate({ to: '/', search: {} })
-  }, [sessionId, isError, navigate])
+  return { sessionId, isError: query.isError }
 }

@@ -1,4 +1,4 @@
-import { createFileRoute, redirect } from '@tanstack/react-router'
+import { createFileRoute, Navigate, redirect } from '@tanstack/react-router'
 
 import AppSidebar from '@/components/AppSidebar'
 import ChatContainer from '@/components/chat/ChatContainer'
@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/sidebar'
 import { useSessionNavigation } from '@/lib/hooks/useSessionNavigation'
 import { useAuthStore } from '@/lib/store/auth-store'
+import { useChatStore } from '@/lib/store/chat-store'
 
 export const Route = createFileRoute('/')({
   validateSearch: (search: Record<string, unknown>) => ({
@@ -18,16 +19,28 @@ export const Route = createFileRoute('/')({
         ? search.sessionId
         : undefined,
   }),
-  beforeLoad: () => {
+  beforeLoad: ({ search }) => {
     if (!useAuthStore.getState().isAuthenticated) {
       throw redirect({ to: '/login' })
+    }
+    // Prepare store for the incoming session (or reset for new chat)
+    const store = useChatStore.getState()
+    if (!search.sessionId) {
+      store.reset()
+    } else if (store.sessionId !== search.sessionId) {
+      store.reset()
+      store.setSessionId(search.sessionId)
     }
   },
   component: ChatPage,
 })
 
 function ChatPage() {
-  useSessionNavigation()
+  const { sessionId, isError } = useSessionNavigation()
+
+  if (sessionId && isError) {
+    return <Navigate to="/" search={{ sessionId: undefined }} />
+  }
 
   return (
     <SidebarProvider>
