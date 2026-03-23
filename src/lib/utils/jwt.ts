@@ -8,11 +8,15 @@ interface JWTClaims {
 }
 
 export function decodeJWTClaims(token: string): JWTClaims {
-  const payload = jwtDecode<JWTClaims>(token)
-  return {
-    user_id: payload.user_id,
-    company_id: payload.company_id,
-    user_uuid: payload.user_uuid,
-    company_uuid: payload.company_uuid,
+  try {
+    const payload = jwtDecode<JWTClaims>(token)
+    return {
+      user_id: payload.user_id,
+      company_id: payload.company_id,
+      user_uuid: payload.user_uuid,
+      company_uuid: payload.company_uuid,
+    }
+  } catch (cause) {
+    throw new Error('Failed to decode JWT', { cause })
   }
 }
