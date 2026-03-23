@@ -61,7 +61,7 @@ export default function AppSidebar() {
 
   const handleNewChat = () => {
     resetChat()
-    navigate({ to: '/', search: {} })
+    navigate({ to: '/' })
   }
 
   const handleLogout = () => {

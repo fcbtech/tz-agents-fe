@@ -24,66 +24,58 @@ export default function SessionList() {
     navigate({ to: '/', search: { sessionId: id } })
   }
 
-  if (isLoading) {
-    return (
-      <SidebarGroup>
-        <SidebarGroupLabel>Chats</SidebarGroupLabel>
-        <SidebarGroupContent>
-          <SidebarMenu>
-            {[0, 1, 2].map((i) => (
-              <SidebarMenuItem key={i}>
-                <div className="flex items-center gap-2 px-2 py-1.5">
-                  <Skeleton className="size-4 shrink-0 rounded" />
-                  <Skeleton className="h-4 flex-1 rounded" />
-                </div>
-              </SidebarMenuItem>
-            ))}
-          </SidebarMenu>
-        </SidebarGroupContent>
-      </SidebarGroup>
-    )
-  }
+  const renderContent = () => {
+    if (isLoading) {
+      return (
+        <SidebarMenu>
+          {Array.from({ length: 3 }, (_, index) => (
+            <SidebarMenuItem key={index}>
+              <div className="flex items-center gap-2 px-2 py-1.5">
+                <Skeleton className="size-4 shrink-0 rounded" />
+                <Skeleton className="h-4 flex-1 rounded" />
+              </div>
+            </SidebarMenuItem>
+          ))}
+        </SidebarMenu>
+      )
+    }
 
-  if (!data?.sessions.length) {
+    if (!data?.sessions.length) {
+      return (
+        <p className="text-muted-foreground px-2 text-sm">No previous chats</p>
+      )
+    }
+
     return (
-      <SidebarGroup>
-        <SidebarGroupLabel>Chats</SidebarGroupLabel>
-        <SidebarGroupContent>
-          <p className="text-muted-foreground px-2 text-sm">
-            No previous chats
-          </p>
-        </SidebarGroupContent>
-      </SidebarGroup>
+      <SidebarMenu>
+        {data.sessions.map((chat) => {
+          const isActive = activeSessionId === chat.session_id
+          return (
+            <SidebarMenuItem key={chat.session_id}>
+              <SidebarMenuButton
+                type="button"
+                isActive={isActive}
+                disabled={isStreaming}
+                aria-current={isActive ? 'page' : undefined}
+                className="w-full"
+                onClick={() => handleSessionClick(chat.session_id)}
+              >
+                <MessageSquare className="size-4" />
+                <span className="truncate">
+                  {chat.title?.trim() || 'Untitled Chat'}
+                </span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          )
+        })}
+      </SidebarMenu>
     )
   }
 
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Chats</SidebarGroupLabel>
-      <SidebarGroupContent>
-        <SidebarMenu>
-          {data.sessions.map((chat) => {
-            const isActive = activeSessionId === chat.session_id
-            return (
-              <SidebarMenuItem key={chat.session_id}>
-                <SidebarMenuButton
-                  type="button"
-                  isActive={isActive}
-                  disabled={isStreaming}
-                  aria-current={isActive ? 'page' : undefined}
-                  className="w-full"
-                  onClick={() => handleSessionClick(chat.session_id)}
-                >
-                  <MessageSquare className="size-4" />
-                  <span className="truncate">
-                    {chat.title?.trim() || 'Untitled Chat'}
-                  </span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            )
-          })}
-        </SidebarMenu>
-      </SidebarGroupContent>
+      <SidebarGroupContent>{renderContent()}</SidebarGroupContent>
     </SidebarGroup>
   )
 }
