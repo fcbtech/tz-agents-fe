@@ -1,0 +1,28 @@
+src/lib/hooks/useSessionNavigation.ts
+  18708dcd5330ecd6 2,12-16,20,24,27-28,30,32
+src/lib/utils/session-messages.ts
+  18708dcd5330ecd6 6,10,18
+src/routes/index.tsx
+  18708dcd5330ecd6 1,13,22,26-33,39-43
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.15",
+  "base_commit_sha": "434e6a3aa95c2ca48324acc79a186f92e54a83f9",
+  "prompts": {
+    "18708dcd5330ecd6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3b0731b9-d012-402c-8900-3bf5384a2982",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "pratik-dev-25 <pratik.m@letstranzact.com>",
+      "messages": [],
+      "total_additions": 32,
+      "total_deletions": 44,
+      "accepted_lines": 31,
+      "overriden_lines": 0,
+      "messages_url": "https://usegitai.com/cas/3ed2b9fc41fb795f970db345b7082172adccfab7cbf94096d6a06633c8d89a44"
+    }
+  }
+}
