@@ -8,9 +8,13 @@ import {
   ChevronsUpDown,
 } from 'lucide-react'
 
+import { useQueryClient } from '@tanstack/react-query'
+
 import { useAuthStore } from '@/lib/store/auth-store'
 import { useChatStore } from '@/lib/store/chat-store'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { useProfile } from '@/lib/hooks/useProfile'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Skeleton } from '@/components/ui/skeleton'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -33,20 +37,14 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar'
 
-function getUserInfo(email: string | null): {
-  email: string
-  name: string
-  initials: string
-} {
-  if (!email) return { email: '', name: 'User', initials: 'U' }
-  const name = email.split('@')[0] ?? 'User'
-  const initials = name
-    .split(/[._-]/)
-    .map((n) => n[0])
+function getInitials(name: string): string {
+  const parts = name.trim().split(/\s+/)
+  const initials = parts
+    .slice(0, 2)
+    .map((p) => p[0])
     .join('')
     .toUpperCase()
-    .slice(0, 2)
-  return { email, name, initials: initials || 'U' }
+  return initials || 'U'
 }
 
 const dummyChats = [
@@ -70,10 +68,17 @@ const chatGroups = [
 
 export default function AppSidebar() {
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
   const userEmail = useAuthStore((s) => s.userEmail)
   const logout = useAuthStore((s) => s.logout)
   const resetChat = useChatStore((s) => s.reset)
-  const user = getUserInfo(userEmail)
+  const { data: profile, isLoading } = useProfile()
+
+  const emailPrefix = userEmail?.split('@')[0] ?? null
+  const displayName = profile?.user.name ?? emailPrefix ?? 'User'
+  const displayEmail = profile?.user.email ?? userEmail ?? ''
+  const avatarUrl = profile?.user.avatar_url
+  const initials = getInitials(displayName)
 
   const handleNewChat = () => {
     resetChat()
@@ -81,6 +86,7 @@ export default function AppSidebar() {
   }
 
   const handleLogout = () => {
+    queryClient.clear()
     logout()
     navigate({ to: '/login' })
   }
@@ -134,16 +140,29 @@ export default function AppSidebar() {
                   className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                 >
                   <Avatar className="size-8 rounded-lg">
+                    <AvatarImage
+                      src={avatarUrl ?? undefined}
+                      alt={displayName}
+                    />
                     <AvatarFallback className="rounded-lg">
-                      {user.initials}
+                      {initials}
                     </AvatarFallback>
                   </Avatar>
-                  <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-medium">{user.name}</span>
-                    <span className="truncate text-xs text-muted-foreground">
-                      {user.email}
-                    </span>
-                  </div>
+                  {isLoading ? (
+                    <div className="grid flex-1 gap-1">
+                      <Skeleton className="h-4 w-24" />
+                      <Skeleton className="h-3 w-32" />
+                    </div>
+                  ) : (
+                    <div className="grid flex-1 text-left text-sm leading-tight">
+                      <span className="truncate font-medium">
+                        {displayName}
+                      </span>
+                      <span className="truncate text-xs text-muted-foreground">
+                        {displayEmail}
+                      </span>
+                    </div>
+                  )}
                   <ChevronsUpDown className="ml-auto size-4" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
@@ -156,14 +175,20 @@ export default function AppSidebar() {
                 <DropdownMenuLabel className="p-0 font-normal">
                   <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                     <Avatar className="size-8 rounded-lg">
+                      <AvatarImage
+                        src={avatarUrl ?? undefined}
+                        alt={displayName}
+                      />
                       <AvatarFallback className="rounded-lg">
-                        {user.initials}
+                        {initials}
                       </AvatarFallback>
                     </Avatar>
                     <div className="grid flex-1 text-left text-sm leading-tight">
-                      <span className="truncate font-medium">{user.name}</span>
+                      <span className="truncate font-medium">
+                        {displayName}
+                      </span>
                       <span className="truncate text-xs text-muted-foreground">
-                        {user.email}
+                        {displayEmail}
                       </span>
                     </div>
                   </div>
