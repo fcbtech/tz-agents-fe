@@ -20,10 +20,7 @@ import type {
   MasterDataRow,
 } from '@/lib/types/master-data'
 
-const SUPPLIER_BLOCKED = 'Select a counterparty first'
-
-/** Supplier (vendor) company UUID for address APIs — not the logged-in buyer org. */
-function supplierCompanyIdForAddresses(draft: PODraft | null): string | undefined {
+function supplierCompanyId(draft: PODraft | null): string | undefined {
   if (!draft) return undefined
   return (
     draft.supplier_details.supplier_company_details?.company_id ||
@@ -36,32 +33,21 @@ export function useMentionSearch(
   query: string,
 ) {
   const poDraft = useChatStore((s) => s.poDraft)
-  const supplierCompanyId = useMemo(
-    () => supplierCompanyIdForAddresses(poDraft),
+  const counterpartyCompanyId = useMemo(
+    () => supplierCompanyId(poDraft),
     [poDraft],
   )
   const [results, setResults] = useState<MasterDataRow[]>([])
   const [loading, setLoading] = useState(false)
-  const [blockedReason, setBlockedReason] = useState<string | null>(null)
   const debounceRef = useRef<ReturnType<typeof setTimeout>>(undefined)
 
   useEffect(() => {
     if (!entityType) {
       clearTimeout(debounceRef.current)
       setResults([])
-      setBlockedReason(null)
       return
     }
 
-    if (entityType === 'supplier_address' && !supplierCompanyId) {
-      clearTimeout(debounceRef.current)
-      setResults([])
-      setBlockedReason(SUPPLIER_BLOCKED)
-      setLoading(false)
-      return
-    }
-
-    setBlockedReason(null)
     clearTimeout(debounceRef.current)
 
     debounceRef.current = setTimeout(async () => {
@@ -95,16 +81,15 @@ export function useMentionSearch(
           case 'delivery_location':
             rows = await searchDeliveryLocations(undefined, limit)
             break
-          case 'supplier_address': {
-            const cid = supplierCompanyId
-            if (!cid) {
-              setResults([])
-              setBlockedReason(SUPPLIER_BLOCKED)
-              return
-            }
-            rows = await searchSupplierAddresses(cid, undefined, limit)
+          case 'supplier_address':
+            rows = counterpartyCompanyId
+              ? await searchSupplierAddresses(
+                  counterpartyCompanyId,
+                  undefined,
+                  limit,
+                )
+              : []
             break
-          }
           case 'bank':
             rows = await searchBanks(limit)
             break
@@ -127,7 +112,7 @@ export function useMentionSearch(
     }, 300)
 
     return () => clearTimeout(debounceRef.current)
-  }, [entityType, query, supplierCompanyId])
+  }, [entityType, query, counterpartyCompanyId])
 
-  return { results, loading, blockedReason }
+  return { results, loading }
 }

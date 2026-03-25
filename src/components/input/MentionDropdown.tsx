@@ -59,10 +59,7 @@ const MentionDropdown = forwardRef((props: Props, ref) => {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedIndex, setSelectedIndex] = useState(0)
 
-  const { results, loading, blockedReason } = useMentionSearch(
-    selectedCategory,
-    searchQuery,
-  )
+  const { results, loading } = useMentionSearch(selectedCategory, searchQuery)
 
   const filteredCategories = categoryFilter
     ? CATEGORIES.filter((cat) =>
@@ -256,12 +253,7 @@ const MentionDropdown = forwardRef((props: Props, ref) => {
               Loading...
             </div>
           )}
-          {!loading && blockedReason && (
-            <div className="px-3 py-4 text-center text-sm text-amber-700">
-              {blockedReason}
-            </div>
-          )}
-          {!loading && !blockedReason && results.length === 0 && (
+          {!loading && results.length === 0 && (
             <div className="px-3 py-4 text-center text-sm text-gray-400">
               No results found
             </div>
