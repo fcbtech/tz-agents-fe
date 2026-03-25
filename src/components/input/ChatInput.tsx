@@ -7,6 +7,7 @@ import { Send } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { createMentionExtension } from './MentionExtension'
 import type { Mention } from '@/lib/types/chat'
+import type { MasterDataEntityType } from '@/lib/types/master-data'
 
 interface Props {
   onSend: (text: string, mentions: Mention[]) => void
@@ -29,7 +30,7 @@ function extractMentions(json: Record<string, unknown>): {
       const category = attrs.category as string | undefined
       const metadata = attrs.metadata as Record<string, unknown> | undefined
       mentions.push({
-        type: category ?? 'counterparty',
+        type: (category ?? 'counterparty') as MasterDataEntityType,
         id: (attrs.id as string | undefined) ?? '',
         displayName: attrs.label as string,
         metadata: metadata ?? {},
