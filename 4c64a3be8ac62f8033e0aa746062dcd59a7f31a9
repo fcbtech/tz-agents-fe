@@ -1,0 +1,26 @@
+src/components/input/MentionDropdown.tsx
+  23bd6601f16f12de 62,256
+src/lib/hooks/useMentionSearch.ts
+  23bd6601f16f12de 23,36-37,84-91,115,117
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.19",
+  "base_commit_sha": "4c64a3be8ac62f8033e0aa746062dcd59a7f31a9",
+  "prompts": {
+    "23bd6601f16f12de": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "74d5c238-cb1d-48f8-93d7-ae6d8dad3eba",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "pratik-dev-25 <pratik.m@letstranzact.com>",
+      "messages": [],
+      "total_additions": 16,
+      "total_deletions": 39,
+      "accepted_lines": 16,
+      "overriden_lines": 0,
+      "messages_url": "https://usegitai.com/cas/21b62344851d03d62bacead89d1adc26cf27ceb093a80e40b88f974d60086b81"
+    }
+  }
+}
