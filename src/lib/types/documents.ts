@@ -11,7 +11,7 @@ export interface IdRef {
 
 export interface CompanyRef {
   company_id: string
-  company_name?: string
+  name?: string
 }
 
 export interface PlaceOfSupply {
@@ -40,6 +40,7 @@ export interface ItemDiscount {
 
 export interface CustomField {
   uuid: string
+  name: string
   value: string
 }
 

@@ -87,12 +87,12 @@ export default function POPreviewPanel({
         <div className="space-y-1">
           <FieldRow
             label="Buyer"
-            value={draft.buyer_details.buyer_company_details?.company_name}
+            value={draft.buyer_details.buyer_company_details?.name}
           />
           <FieldRow
             label="Supplier"
             value={
-              draft.supplier_details.supplier_company_details?.company_name
+              draft.supplier_details.supplier_company_details?.name
             }
           />
           <FieldRow
