@@ -1,6 +1,5 @@
 import { useNavigate } from '@tanstack/react-router'
 import {
-  MessageSquare,
   Plus,
   Settings,
   CreditCard,
@@ -28,14 +27,13 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar'
+
+import SessionList from '@/components/SessionList'
 
 function getInitials(name: string): string {
   const parts = name.trim().split(/\s+/)
@@ -46,25 +44,6 @@ function getInitials(name: string): string {
     .toUpperCase()
   return initials || 'U'
 }
-
-const dummyChats = [
-  { id: '1', title: 'PO for Steel Rods - Tata Steel', date: 'Today' },
-  { id: '2', title: 'Aluminium Sheets Order', date: 'Today' },
-  { id: '3', title: 'Copper Wire Purchase', date: 'Yesterday' },
-  { id: '4', title: 'PO for Packaging Material', date: 'Yesterday' },
-  { id: '5', title: 'Bolt & Nut Order - Sundram', date: 'Last 7 days' },
-  { id: '6', title: 'Raw Material Indent - March', date: 'Last 7 days' },
-  { id: '7', title: 'Chemical Supplies PO', date: 'Last 7 days' },
-  { id: '8', title: 'Electrical Components Order', date: 'Last 30 days' },
-  { id: '9', title: 'Paint & Coating Supplies', date: 'Last 30 days' },
-]
-
-const chatGroups = [
-  'Today',
-  'Yesterday',
-  'Last 7 days',
-  'Last 30 days',
-] as const
 
 export default function AppSidebar() {
   const navigate = useNavigate()
@@ -105,29 +84,7 @@ export default function AppSidebar() {
       </SidebarHeader>
 
       <SidebarContent>
-        {chatGroups.map((group) => {
-          const chats = dummyChats.filter((c) => c.date === group)
-          if (chats.length === 0) return null
-          return (
-            <SidebarGroup key={group}>
-              <SidebarGroupLabel>{group}</SidebarGroupLabel>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {chats.map((chat) => (
-                    <SidebarMenuItem key={chat.id}>
-                      <SidebarMenuButton asChild>
-                        <button className="w-full">
-                          <MessageSquare className="size-4" />
-                          <span className="truncate">{chat.title}</span>
-                        </button>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  ))}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>
-          )
-        })}
+        <SessionList />
       </SidebarContent>
 
       <SidebarFooter>

@@ -1,24 +1,42 @@
-import { createFileRoute, redirect } from '@tanstack/react-router'
-import { useAuthStore } from '@/lib/store/auth-store'
-import {
-  SidebarProvider,
-  SidebarInset,
-  SidebarTrigger,
-} from '@/components/ui/sidebar'
+import { createFileRoute, Navigate, redirect } from '@tanstack/react-router'
+
 import AppSidebar from '@/components/AppSidebar'
 import ChatContainer from '@/components/chat/ChatContainer'
 import { Separator } from '@/components/ui/separator'
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from '@/components/ui/sidebar'
+import { useSessionNavigation } from '@/lib/hooks/useSessionNavigation'
+import { useAuthStore } from '@/lib/store/auth-store'
+import { useChatStore } from '@/lib/store/chat-store'
 
 export const Route = createFileRoute('/')({
-  beforeLoad: () => {
+  beforeLoad: ({ location }) => {
     if (!useAuthStore.getState().isAuthenticated) {
       throw redirect({ to: '/login' })
+    }
+    // Prepare store for the incoming session (or reset for new chat)
+    const store = useChatStore.getState()
+    const sessionId = new URLSearchParams(location.searchStr).get('sessionId')
+    if (!sessionId) {
+      store.reset()
+    } else if (store.sessionId !== sessionId) {
+      store.reset()
+      store.setSessionId(sessionId)
     }
   },
   component: ChatPage,
 })
 
 function ChatPage() {
+  const { sessionId, isError } = useSessionNavigation()
+
+  if (sessionId && isError) {
+    return <Navigate to="/" replace />
+  }
+
   return (
     <SidebarProvider>
       <AppSidebar />
