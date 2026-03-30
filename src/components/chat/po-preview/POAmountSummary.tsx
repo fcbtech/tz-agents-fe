@@ -7,17 +7,15 @@ import {
   formatTcsPercent,
 } from '@/lib/utils/po-format'
 
-interface POAmountSummaryProps {
-  amountDetails: AmountDetails
-  tcsDetails?: TcsDetails
-  currencyValue?: number
-}
-
 export default function POAmountSummary({
   amountDetails,
   tcsDetails,
   currencyValue,
-}: POAmountSummaryProps) {
+}: {
+  amountDetails: AmountDetails
+  tcsDetails?: TcsDetails
+  currencyValue?: number
+}) {
   const ntecs = amountDetails.non_taxable_extra_charges ?? []
 
   const rows: { key: string; label: string; value: string }[] = []

@@ -10,19 +10,17 @@ import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import type { PODraft } from '@/lib/types/documents'
 
-interface Props {
-  draft: PODraft
-  isReady: boolean
-  isSubmitted: boolean
-  onConfirm: () => void
-}
-
 export default function POPreviewPanel({
   draft,
   isReady,
   isSubmitted,
   onConfirm,
-}: Props) {
+}: {
+  draft: PODraft
+  isReady: boolean
+  isSubmitted: boolean
+  onConfirm: () => void
+}) {
   const currencyValue = draft.currency.currency_value
 
   return (

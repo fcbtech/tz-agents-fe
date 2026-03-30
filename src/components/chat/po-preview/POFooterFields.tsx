@@ -2,11 +2,7 @@ import FieldRow from '@/components/chat/po-preview/FieldRow'
 import SectionHeading from '@/components/chat/po-preview/SectionHeading'
 import type { PODraft } from '@/lib/types/documents'
 
-interface POFooterFieldsProps {
-  draft: PODraft
-}
-
-export default function POFooterFields({ draft }: POFooterFieldsProps) {
+export default function POFooterFields({ draft }: { draft: PODraft }) {
   const bankName =
     draft.additional_document_details.selected_account_details?.name.trim()
   const showBank = Boolean(bankName)

@@ -3,10 +3,6 @@ import SectionHeading from '@/components/chat/po-preview/SectionHeading'
 import type { PODraft } from '@/lib/types/documents'
 import { formatCurrencyLabel, formatPlaceOfSupply } from '@/lib/utils/po-format'
 
-interface POHeaderFieldsProps {
-  draft: PODraft
-}
-
 function nonEmpty(s: string | undefined): string | undefined {
   const t = s?.trim()
   return t ? t : undefined
@@ -30,7 +26,7 @@ function FieldGroup({ title, rows }: { title: string; rows: Row[] }) {
   )
 }
 
-export default function POHeaderFields({ draft }: POHeaderFieldsProps) {
+export default function POHeaderFields({ draft }: { draft: PODraft }) {
   const pd = draft.primary_document_details
   const buyer = draft.buyer_details
   const supplier = draft.supplier_details

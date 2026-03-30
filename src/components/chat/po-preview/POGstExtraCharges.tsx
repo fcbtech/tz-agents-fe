@@ -13,15 +13,13 @@ import { calcGstChargeTax } from '@/lib/utils/po-calc'
 
 const EM = '\u2014'
 
-interface POGstExtraChargesProps {
-  charges?: GstExtraCharge[]
-  currencyValue?: number
-}
-
 export default function POGstExtraCharges({
   charges,
   currencyValue,
-}: POGstExtraChargesProps) {
+}: {
+  charges?: GstExtraCharge[]
+  currencyValue?: number
+}) {
   if (!charges?.length) return null
 
   return (

@@ -2,13 +2,14 @@ import { Clock } from 'lucide-react'
 
 import { Separator } from '@/components/ui/separator'
 
-export interface FieldRowProps {
+/** Label on the left, value or pending placeholder on the right. */
+export default function FieldRow({
+  label,
+  value,
+}: {
   label: string
   value: string | undefined
-}
-
-/** Label on the left, value or pending placeholder on the right. */
-export default function FieldRow({ label, value }: FieldRowProps) {
+}) {
   return (
     <>
       <div className="flex justify-between items-start py-2">

@@ -25,11 +25,6 @@ import {
 
 const EM = '\u2014'
 
-interface POItemsTableProps {
-  items: POItem[]
-  currencyValue?: number
-}
-
 function ItemMeta({
   comment,
   customFields,
@@ -57,7 +52,10 @@ function ItemMeta({
 export default function POItemsTable({
   items,
   currencyValue,
-}: POItemsTableProps) {
+}: {
+  items: POItem[]
+  currencyValue?: number
+}) {
   const hasItems = items.length > 0
   const subtotal = calcItemsSubtotal(items)
 
