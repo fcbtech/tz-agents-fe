@@ -3,7 +3,7 @@ export interface UserProfile {
   user_uuid: string
   name: string
   email: string
-  avatar_url: string | null
+  avatar_url: string
   mobile: string | null
 }
 
@@ -11,7 +11,7 @@ export interface CompanyProfile {
   company_id: number
   company_uuid: string
   name: string
-  logo_url: string | null
+  logo_url: string
 }
 
 export interface ProfileResponse {
