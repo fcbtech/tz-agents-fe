@@ -1,0 +1,30 @@
+src/components/chat/po-preview/POItemsTable.tsx
+  dd435629e5cd8147 142,145,151,156,159,162,165,171
+src/components/chat/po-preview/POGstExtraCharges.tsx
+  dd435629e5cd8147 47,53
+src/components/chat/po-preview/POHeaderFields.tsx
+  dd435629e5cd8147 12,32,35,43,47,51,55,60-61,64,70,74-75,78,82,89,93,97,101-103,113,120,123-124
+src/components/chat/po-preview/FieldRow.tsx
+  dd435629e5cd8147 3,11-13,18
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.22",
+  "base_commit_sha": "6801c4910822644442c3fb955b0f813ec45674f3",
+  "prompts": {
+    "dd435629e5cd8147": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "4837a3b4-4f05-4d87-92d3-905a7d8ee4fd",
+        "model": "composer-2"
+      },
+      "human_author": "pratik-dev-25 <pratik.m@letstranzact.com>",
+      "messages": [],
+      "total_additions": 76,
+      "total_deletions": 95,
+      "accepted_lines": 40,
+      "overriden_lines": 0,
+      "messages_url": "https://usegitai.com/cas/2a58cacbea5b3b89deb485478fd654dd770b9756249fcd0ccc5163356b361b76"
+    }
+  }
+}
