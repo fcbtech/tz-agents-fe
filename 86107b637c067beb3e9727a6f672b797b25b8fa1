@@ -1,0 +1,38 @@
+src/components/chat/po-preview/POFooterFields.tsx
+  dd435629e5cd8147 5
+src/components/chat/po-preview/POGstExtraCharges.tsx
+  dd435629e5cd8147 19-22
+src/components/chat/POPreviewPanel.tsx
+  dd435629e5cd8147 18-23
+src/components/chat/po-preview/FieldRow.tsx
+  dd435629e5cd8147 5-9,12
+src/components/chat/po-preview/POHeaderFields.tsx
+  dd435629e5cd8147 29
+src/components/chat/po-preview/POAmountSummary.tsx
+  dd435629e5cd8147 14-18
+src/components/chat/po-preview/SectionHeading.tsx
+  dd435629e5cd8147 3-5,7
+src/components/chat/po-preview/POItemsTable.tsx
+  dd435629e5cd8147 55-58
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.22",
+  "base_commit_sha": "86107b637c067beb3e9727a6f672b797b25b8fa1",
+  "prompts": {
+    "dd435629e5cd8147": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "4837a3b4-4f05-4d87-92d3-905a7d8ee4fd",
+        "model": "composer-2"
+      },
+      "human_author": "pratik-dev-25 <pratik.m@letstranzact.com>",
+      "messages": [],
+      "total_additions": 36,
+      "total_deletions": 48,
+      "accepted_lines": 31,
+      "overriden_lines": 0,
+      "messages_url": "https://usegitai.com/cas/fb46e4f9fbd7472fcd55f5e177525f80c1c19e59c080a4d11c5d23512c736c85"
+    }
+  }
+}
