@@ -1,8 +1,4 @@
-import type {
-  GstExtraCharge,
-  NonTaxableExtraChargePayload,
-  POItem,
-} from '@/lib/types/documents'
+import type { GstExtraCharge, POItem } from '@/lib/types/documents'
 
 function parseQty(item: POItem): number {
   if (item.quantity == null || item.quantity === '') return 0
@@ -59,26 +55,4 @@ export function calcGstChargeTax(charge: GstExtraCharge): number {
     sum += (base * pct) / 100
   }
   return sum
-}
-
-/**
- * Net effect of non-taxable extra charges on the document.
- * `totalBeforeTax` is typically items untaxed subtotal (before line taxes).
- */
-export function calcNtecTotal(
-  charges: NonTaxableExtraChargePayload[] | undefined,
-  totalBeforeTax: number,
-): number {
-  if (!charges?.length) return 0
-  let net = 0
-  for (const c of charges) {
-    const raw = parseFloat(c.value ?? '')
-    const amountNum = Number.isFinite(raw) ? raw : 0
-    const unit = c.unit_type?.type ?? 0
-    const magnitude =
-      unit === 1 ? (totalBeforeTax * amountNum) / 100 : amountNum
-    const isAdd = c.charge_type?.type === 1
-    net += isAdd ? magnitude : -magnitude
-  }
-  return net
 }

@@ -127,7 +127,10 @@ export default function POItemsTable({
                     : altUnit || (altQty != null ? String(altQty) : undefined)
 
                 return (
-                  <TableRow key={item.product} className="border-gray-100">
+                  <TableRow
+                    key={`${item.product}-${i}`}
+                    className="border-gray-100"
+                  >
                     <TableCell className="py-2 text-gray-400">
                       {i + 1}
                     </TableCell>

@@ -15,7 +15,9 @@ export default function FieldRow({
     <>
       <div className="flex justify-between items-start py-2">
         <span className="text-gray-500 text-sm">{label}</span>
-        <span className="font-medium text-sm text-right max-w-[60%]">{trimmed}</span>
+        <span className="font-medium text-sm text-right max-w-[60%]">
+          {trimmed}
+        </span>
       </div>
       <Separator />
     </>
