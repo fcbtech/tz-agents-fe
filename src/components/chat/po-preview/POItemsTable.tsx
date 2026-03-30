@@ -31,7 +31,7 @@ function ItemMeta({
   customFields?: CustomField[]
 }) {
   const hasComment = Boolean(comment?.trim())
-  const cfs = customFields?.filter((cf) => cf.name || cf.value) ?? []
+  const cfs = customFields?.filter((cf) => cf.name?.trim() && cf.value) ?? []
   if (!hasComment && cfs.length === 0) return null
   return (
     <div className="mt-1 space-y-0.5 text-[11px] text-gray-500">

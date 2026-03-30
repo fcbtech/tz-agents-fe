@@ -6,19 +6,30 @@ import { formatCurrencyLabel, formatPlaceOfSupply } from '@/lib/utils/po-format'
 interface Row {
   label: string
   value: string | undefined
+  showPending?: boolean
 }
 
 function FieldGroup({ title, rows }: { title: string; rows: Row[] }) {
-  const filled = rows.filter((r) => Boolean(r.value?.trim()))
-  if (!filled.length) return null
+  const visible = rows.filter((r) => Boolean(r.value?.trim()) || r.showPending)
+  if (!visible.length) return null
   return (
     <>
       <SectionHeading>{title}</SectionHeading>
-      {filled.map((r) => (
-        <FieldRow key={r.label} label={r.label} value={r.value} />
+      {visible.map((r) => (
+        <FieldRow
+          key={r.label}
+          label={r.label}
+          value={r.value}
+          showPending={r.showPending}
+        />
       ))}
     </>
   )
+}
+
+function trimOrUndefined(value?: string) {
+  const trimmed = value?.trim()
+  return trimmed || undefined
 }
 
 export default function POHeaderFields({ draft }: { draft: PODraft }) {
@@ -40,28 +51,38 @@ export default function POHeaderFields({ draft }: { draft: PODraft }) {
   const partiesRows: Row[] = [
     {
       label: 'Buyer',
-      value: buyer.buyer_company_details?.name?.trim(),
+      value: trimOrUndefined(buyer.buyer_company_details?.name),
+      showPending: true,
     },
     {
       label: 'Buyer Billing Address',
-      value: buyer.selected_buyer_billing_address?.name.trim(),
+      value: trimOrUndefined(buyer.selected_buyer_billing_address?.name),
     },
     {
       label: 'Supplier',
-      value: supplier.supplier_company_details?.name?.trim(),
+      value: trimOrUndefined(supplier.supplier_company_details?.name),
+      showPending: true,
     },
     {
       label: 'Supplier Billing Address',
-      value: supplier.selected_supplier_billing_address?.name.trim(),
+      value: trimOrUndefined(supplier.selected_supplier_billing_address?.name),
     },
   ]
 
   const deliveryRows: Row[] = [
-    { label: 'Store', value: pd.store_details?.name.trim() },
-    { label: 'Delivery Date', value: pd.delivery_date?.trim() },
+    {
+      label: 'Store',
+      value: trimOrUndefined(pd.store_details?.name),
+      showPending: true,
+    },
+    {
+      label: 'Delivery Date',
+      value: trimOrUndefined(pd.delivery_date),
+      showPending: true,
+    },
     {
       label: 'Delivery Location',
-      value: buyer.selected_buyer_delivery_location?.name.trim(),
+      value: trimOrUndefined(buyer.selected_buyer_delivery_location?.name),
     },
     {
       label: 'Place of Supply',
@@ -86,20 +107,23 @@ export default function POHeaderFields({ draft }: { draft: PODraft }) {
   const termsRows: Row[] = [
     {
       label: 'Payment Terms',
-      value: pd.payment_terms?.name.trim(),
+      value: trimOrUndefined(pd.payment_terms?.name),
+      showPending: true,
     },
     {
       label: 'Logistics',
-      value: add.selected_logistic_details?.name.trim(),
+      value: trimOrUndefined(add.selected_logistic_details?.name),
+      showPending: true,
     },
     {
       label: 'Terms & Conditions',
-      value: add.selected_terms_and_conditions?.name.trim(),
+      value: trimOrUndefined(add.selected_terms_and_conditions?.name),
+      showPending: true,
     },
   ]
 
-  const customFieldsFilled = (pd.custom_fields ?? []).filter((cf) =>
-    Boolean(cf.value.trim()),
+  const customFieldsFilled = (pd.custom_fields ?? []).filter(
+    (cf) => Boolean(cf.name?.trim()) && Boolean(cf.value.trim()),
   )
 
   return (
@@ -110,7 +134,7 @@ export default function POHeaderFields({ draft }: { draft: PODraft }) {
       <FieldGroup title="Reference Numbers" rows={referenceRows} />
       <FieldGroup title="Terms" rows={termsRows} />
 
-      {draft.comment?.value.trim() ? (
+      {trimOrUndefined(draft.comment?.value) ? (
         <>
           <SectionHeading>Comment</SectionHeading>
           <FieldRow label="Comment" value={draft.comment.value} />

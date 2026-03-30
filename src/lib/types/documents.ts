@@ -6,7 +6,7 @@
 
 export interface IdRef {
   id: string
-  name: string
+  name?: string
 }
 
 /** Tax line with optional percentage for preview calculations (matches TaxRef in backend). */
@@ -45,7 +45,7 @@ export interface ItemDiscount {
 
 export interface CustomField {
   uuid: string
-  name: string
+  name?: string
   value: string
 }
 

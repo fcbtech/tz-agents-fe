@@ -4,7 +4,7 @@ import type { PODraft } from '@/lib/types/documents'
 
 export default function POFooterFields({ draft }: { draft: PODraft }) {
   const bankName =
-    draft.additional_document_details.selected_account_details?.name.trim()
+    draft.additional_document_details.selected_account_details?.name?.trim()
   const showBank = Boolean(bankName)
   const showSig = draft.attach_signature === true
 
