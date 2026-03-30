@@ -1,0 +1,22 @@
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.22",
+  "base_commit_sha": "c55fc2b05dd0ccd264bc59f0a450487576c4197a",
+  "prompts": {
+    "edb952f6ef43c616": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "282b45b3-9eea-426d-8f3e-62edd59171e3",
+        "model": "composer-2"
+      },
+      "human_author": "pratik-dev-25 <pratik.m@letstranzact.com>",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 16,
+      "accepted_lines": 0,
+      "overriden_lines": 0,
+      "messages_url": "https://usegitai.com/cas/29b03f314ab4499627e04f3e7357cea0a7faae1ce2563e9bca3398b14e768b3e"
+    }
+  }
+}
