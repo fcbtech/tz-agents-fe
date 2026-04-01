@@ -68,7 +68,7 @@ export function createMentionExtension() {
               component?.ref as
                 | { onKeyDown: (props: unknown) => boolean }
                 | undefined
-            )?.onKeyDown(props)
+            )?.onKeyDown(props) ?? false
           },
           onExit: () => {
             popup?.[0]?.destroy()

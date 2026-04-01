@@ -1,17 +1,7 @@
+import type { MasterDataEntityType } from '@/lib/types/master-data'
+
 export interface Mention {
-  type:
-    | 'counterparty'
-    | 'item'
-    | 'tax'
-    | 'doc_number'
-    | 'payment_terms'
-    | 'store'
-    | 'billing_address'
-    | 'delivery_location'
-    | 'supplier_address'
-    | 'bank'
-    | 'logistics'
-    | 'terms_and_conditions'
+  type: MasterDataEntityType
   id: string
   displayName: string
   metadata: Record<string, unknown>
